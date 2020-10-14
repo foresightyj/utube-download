@@ -24,7 +24,7 @@ jobs:
       run: sudo -H pip install --upgrade youtube-dl
 
     - name: Download
-      run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
+      run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
 
     # - name: Upload
     #   uses: actions/upload-artifact@v2
