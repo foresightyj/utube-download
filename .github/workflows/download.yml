@@ -23,5 +23,8 @@ jobs:
     - name: Install youtube-dl
       run: sudo -H pip install --upgrade youtube-dl
     - name: Download video
-      run: youtube-dl https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
+      run: youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
+
+    - name: List
+      run: ls -al
 
