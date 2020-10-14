@@ -26,10 +26,19 @@ jobs:
     - name: Download
       run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
 
-    - name: Upload
-      uses: actions/upload-artifact@v2
+    # - name: Upload
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: my-artifact
+    #     path: ./downloads/
+    
+    - name: setup aliyun oss
+      uses: manyuanrong/setup-ossutil@v1.0
       with:
-        name: my-artifact
-        path: ./downloads/
+        endpoint: oss-cn-qingdao.aliyuncs.com
+        access-key-id: ${{ secrets.OSS_KEY_ID }}
+        access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
+    - name: upload to oss
+      run: ossutil cp -r ./downloads/ oss://utube-download/downloads --update
 
