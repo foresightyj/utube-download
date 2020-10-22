@@ -22,19 +22,16 @@ jobs:
         echo name, ${{github.event_name}}
         echo id, ${{github.event.id}} 
 
-    - name: Try my utube-issue-parser 
-      uses: foresightyj/utube-issue-parser@main
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
+        python-version: 3.8
 
+    - name: Install youtube-dl
+      run: sudo -H pip install --upgrade youtube-dl
 
-    # - name: Set up Python
-    #   uses: actions/setup-python@v2
-    #   with:
-    #     python-version: 3.8
-
-    # - name: Install youtube-dl
-    #   run: sudo -H pip install --upgrade youtube-dl
+    - name: Download
+      run: echo downloading ${{steps.vars.outputs.url}}
 
     # - name: Download
     #   run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
