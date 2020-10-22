@@ -23,7 +23,7 @@ jobs:
         echo id, ${{github.event.id}} 
 
     - name: Try my utube-issue-parser 
-      uses: foresightyj/utube-issue-parser/main
+      uses: foresightyj/utube-issue-parser@main
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
 
