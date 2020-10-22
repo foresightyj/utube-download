@@ -17,10 +17,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install youtube-dl
+    - name: Debug github action context
       run: |
         echo name, ${{github.event_name}}
         echo id, ${{github.event.id}} 
+
+    - name: Try my utube-issue-parser 
+      uses: foresightyj/utube-issue-parser
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+
 
     # - name: Set up Python
     #   uses: actions/setup-python@v2
