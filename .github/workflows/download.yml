@@ -19,23 +19,8 @@ jobs:
 
     - name: Install youtube-dl
       run: |
-        echo ${{github}}
-        echo ${{github.action}}
-        echo ${{github.action_path}}
-        echo ${{github.actor}}
-        echo ${{github.base_ref}}
-        echo ${{github.event}}
-        echo ${{github.event_name}}
-        echo ${{github.event_path}}
-        echo ${{github.head_ref}}
-        echo ${{github.job}}
-        echo ${{github.ref}}
-        echo ${{github.repository}}
-        echo ${{github.repository_owner}}
-        echo ${{github.run_id}}
-        echo ${{github.run_number}}
-        echo ${{github.workflow}}
-        echo ${{github.workspace}}
+        echo name, ${{github.event_name}}
+        echo id, ${{github.event.id}} 
 
     # - name: Set up Python
     #   uses: actions/setup-python@v2
