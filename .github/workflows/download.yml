@@ -4,10 +4,12 @@
 name: UTube Download
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
+  issues:
+    types: [opened]
 
 jobs:
   download:
@@ -15,16 +17,36 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-
     - name: Install youtube-dl
-      run: sudo -H pip install --upgrade youtube-dl
+      run: |
+        echo ${{github}}
+        echo ${{github.action}}
+        echo ${{github.action_path}}
+        echo ${{github.actor}}
+        echo ${{github.base_ref}}
+        echo ${{github.event}}
+        echo ${{github.event_name}}
+        echo ${{github.event_path}}
+        echo ${{github.head_ref}}
+        echo ${{github.job}}
+        echo ${{github.ref}}
+        echo ${{github.repository}}
+        echo ${{github.repository_owner}}
+        echo ${{github.run_id}}
+        echo ${{github.run_number}}
+        echo ${{github.workflow}}
+        echo ${{github.workspace}}
 
-    - name: Download
-      run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
+    # - name: Set up Python
+    #   uses: actions/setup-python@v2
+    #   with:
+    #     python-version: 3.8
+
+    # - name: Install youtube-dl
+    #   run: sudo -H pip install --upgrade youtube-dl
+
+    # - name: Download
+    #   run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
 
     # - name: Upload
     #   uses: actions/upload-artifact@v2
@@ -32,13 +54,13 @@ jobs:
     #     name: my-artifact
     #     path: ./downloads/
     
-    - name: setup aliyun oss
-      uses: manyuanrong/setup-ossutil@v1.0
-      with:
-        endpoint: oss-cn-qingdao.aliyuncs.com
-        access-key-id: ${{ secrets.OSS_KEY_ID }}
-        access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+    # - name: setup aliyun oss
+    #   uses: manyuanrong/setup-ossutil@v1.0
+    #   with:
+    #     endpoint: oss-cn-qingdao.aliyuncs.com
+    #     access-key-id: ${{ secrets.OSS_KEY_ID }}
+    #     access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-    - name: upload to oss
-      run: ossutil cp -r ./downloads/ oss://utube-download/downloads --update
+    # - name: upload to oss
+    #   run: ossutil cp -r ./downloads/ oss://utube-download/downloads --update
 
