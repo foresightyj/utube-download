@@ -17,6 +17,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Try my utube-issue-parser
+      id: parser
+      uses: foresightyj/utube-issue-parser@main
+      with:                                     
+        github-token: ${{secrets.GITHUB_TOKEN}} 
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -24,15 +30,6 @@ jobs:
 
     - name: Install youtube-dl
       run: sudo -H pip install --upgrade youtube-dl
-
-    - name: Try my utube-issue-parser
-      id: parser
-      uses: foresightyj/utube-issue-parser@main
-      with:                                     
-        github-token: ${{secrets.GITHUB_TOKEN}} 
-
-    - name: Download
-      run: echo downloading ${{steps.parser.outputs.url}}
 
     - name: Download
       run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' ${{steps.parser.outputs.url}}
@@ -42,14 +39,19 @@ jobs:
     #   with:
     #     name: my-artifact
     #     path: ./downloads/
-    
-    - name: setup aliyun oss
-      uses: manyuanrong/setup-ossutil@v1.0
-      with:
-        endpoint: oss-cn-qingdao.aliyuncs.com
-        access-key-id: ${{ secrets.OSS_KEY_ID }}
-        access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-    - name: upload to oss
-      run: ossutil cp -r ./downloads/ oss://utube-download/downloads --update
+    - name: Upload to youku
+      run: |
+        sudo -H pip install requests
+        sudo -H pip install oss2
+
+    # - name: setup aliyun oss
+    #   uses: manyuanrong/setup-ossutil@v1.0
+    #   with:
+    #     endpoint: oss-cn-qingdao.aliyuncs.com
+    #     access-key-id: ${{ secrets.OSS_KEY_ID }}
+    #     access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+    # - name: upload to oss
+    #   run: ossutil cp -r ./downloads/ oss://utube-download/downloads --update
 
