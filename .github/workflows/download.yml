@@ -17,11 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Debug github action context
-      run: |
-        echo name, ${{github.event_name}}
-        echo id, ${{github.event.id}} 
-
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -39,8 +34,8 @@ jobs:
     - name: Download
       run: echo downloading ${{steps.parser.outputs.url}}
 
-    # - name: Download
-    #   run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
+    - name: Download
+      run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' ${{steps.parser.outputs.url}}
 
     # - name: Upload
     #   uses: actions/upload-artifact@v2
@@ -48,13 +43,13 @@ jobs:
     #     name: my-artifact
     #     path: ./downloads/
     
-    # - name: setup aliyun oss
-    #   uses: manyuanrong/setup-ossutil@v1.0
-    #   with:
-    #     endpoint: oss-cn-qingdao.aliyuncs.com
-    #     access-key-id: ${{ secrets.OSS_KEY_ID }}
-    #     access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+    - name: setup aliyun oss
+      uses: manyuanrong/setup-ossutil@v1.0
+      with:
+        endpoint: oss-cn-qingdao.aliyuncs.com
+        access-key-id: ${{ secrets.OSS_KEY_ID }}
+        access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-    # - name: upload to oss
-    #   run: ossutil cp -r ./downloads/ oss://utube-download/downloads --update
+    - name: upload to oss
+      run: ossutil cp -r ./downloads/ oss://utube-download/downloads --update
 
