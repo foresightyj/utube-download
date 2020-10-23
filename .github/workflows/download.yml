@@ -30,8 +30,14 @@ jobs:
     - name: Install youtube-dl
       run: sudo -H pip install --upgrade youtube-dl
 
+    - name: Try my utube-issue-parser
+      id: parser
+      uses: foresightyj/utube-issue-parser@main
+      with:                                     
+        github-token: ${{secrets.GITHUB_TOKEN}} 
+
     - name: Download
-      run: echo downloading ${{steps.vars.outputs.url}}
+      run: echo downloading ${{steps.parser.outputs.url}}
 
     # - name: Download
     #   run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' https://www.youtube.com/watch?v=St5B7hnMLjg&list=PL4cUxeGkcC9iEwigam3gTjU_7IA3W2WZA
