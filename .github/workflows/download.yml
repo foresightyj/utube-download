@@ -15,9 +15,7 @@ jobs:
 
     - name: Try my utube-issue-parser
       id: parser
-      uses: foresightyj/utube-issue-parser@main
-      with:                                     
-        github-token: ${{secrets.GITHUB_TOKEN}} 
+      uses: foresightyj/actions-parse-issue-body-as@master
         
     - name: Set up Python
       uses: actions/setup-python@v2
