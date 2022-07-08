@@ -42,4 +42,12 @@ jobs:
 
     - name: upload to oss
       run: ossutil cp -r ./downloads/ oss://utube-download/downloads --update
+      
+    - name: remove this issue conditionally 
+      uses: vtcaregorodtcev/delete-issue@main
+      if: ${{ !contains(github.event.issue.title, 'http') }}
+      with:
+        github_token: ${{ secrets.PERSONAL_TOKEN }}
+        issue_node_id: ${{ github.event.issue.node_id }}
+
 
