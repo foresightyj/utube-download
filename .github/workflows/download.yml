@@ -11,10 +11,6 @@ jobs:
   download:
     runs-on: ubuntu-latest
     steps:
-    - name: Add mask
-      run: |
-          echo "::add-mask::${{ secrets.URL_MASK_1 }}" 
-
     - uses: actions/checkout@v2
 
     - name: parse issue comments
