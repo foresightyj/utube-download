@@ -23,15 +23,10 @@ jobs:
         python-version: 3.8
 
     - name: Install youtube-dl
-      run: sudo -H pip install --upgrade youtube-dl
+      run: sudo -H pip install youtube-dl
 
     - name: Download
       run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' ${{steps.parser.outputs.text}}
-
-    - name: Install requests & oss2
-      run: |
-        sudo -H pip install requests
-        sudo -H pip install oss2
 
     - name: setup aliyun oss
       uses: manyuanrong/setup-ossutil@v2.0
