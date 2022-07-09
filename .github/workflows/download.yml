@@ -16,6 +16,13 @@ jobs:
     - name: parse issue comments
       id: parser
       uses: foresightyj/actions-parse-issue-body-as@master
+      
+    - name: remove this issue conditionally 
+      uses: vtcaregorodtcev/delete-issue@main
+      if: ${{ !contains(github.event.issue.title, 'http') }}
+      with:
+        github_token: ${{ secrets.PERSONAL_TOKEN }}
+        issue_node_id: ${{ github.event.issue.node_id }}
         
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -37,12 +44,6 @@ jobs:
 
     - name: upload to oss
       run: ossutil cp -r ./downloads/ oss://utube-download/downloads --update
-      
-    - name: remove this issue conditionally 
-      uses: vtcaregorodtcev/delete-issue@main
-      if: ${{ !contains(github.event.issue.title, 'http') }}
-      with:
-        github_token: ${{ secrets.PERSONAL_TOKEN }}
-        issue_node_id: ${{ github.event.issue.node_id }}
+
 
 
