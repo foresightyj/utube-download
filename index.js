@@ -50,6 +50,4 @@ const linkExtractorsMap = {
     await page.emulateMedia({ media: "print" });
     await page.pdf({ path: pdfOutPath, format: opts.format || "A2" });
     await browser.close();
-
 })();
-
