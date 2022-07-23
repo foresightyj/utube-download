@@ -9,7 +9,7 @@ on:
 
 jobs:
   download:
-    if: ${{ !contains(github.event.issue.title, 'http') }}
+    if: ${{ contains(github.event.issue.title, 'http') }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
