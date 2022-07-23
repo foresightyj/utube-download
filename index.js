@@ -33,7 +33,7 @@ const linkExtractorsMap = {
         }
     });
 
-    await page.goto(url, { waitUntil: opts.waitUtil || "networkidle", timeout: Number(opts.timeout) || 30 });
+    await page.goto(url, { waitUntil: opts.waitUtil || "load", timeout: Number(opts.timeout) || 30 });
 
     const content = await page.content();
     const htmlOutPath = path.join(DOWNLOADS_DIR, hostName, fileName + ".html");
