@@ -33,8 +33,13 @@ jobs:
     - name: Install youtube-dl
       run: sudo -H pip install youtube-dl
 
-    - name: Download
+    - name: Download Single
+      if: ${{ !contains(github.event.issue.title, 'playlist?list') }}
       run: youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' ${{steps.parser.outputs.text}}
+
+    - name: Download Youtube Playlist
+      if: ${{ contains(github.event.issue.title, 'playlist?list') }}
+      run: youtube-dl -i --yes-playlist -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' ${{steps.parser.outputs.text}}
 
     - name: setup aliyun oss
       uses: manyuanrong/setup-ossutil@v2.0
