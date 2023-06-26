@@ -44,13 +44,13 @@ jobs:
     - name: Download Single
       if: ${{ !contains(github.event.issue.title, 'playlist?list') }}
       run: |
-        youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' ${{steps.parser.outputs.text}}
+        youtube-dl -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' ${{steps.parser.outputs.text}} --verbose
         ossutil cp -r ./downloads/ oss://utube-download/downloads --update
 
     - name: Download Youtube Playlist
       if: ${{ contains(github.event.issue.title, 'playlist?list') }}
       run: |
-        youtube-dl --get-id ${{steps.parser.outputs.text}} | xargs -I '{}' -P 10 youtube-dl  -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' 'https://youtube.com/watch?v={}'
+        youtube-dl --get-id ${{steps.parser.outputs.text}} --verbose | xargs -I '{}' -P 10 youtube-dl  -o "./downloads/%(title)s-%(id)s.%(ext)s" -f 'best' 'https://youtube.com/watch?v={}'
         ossutil cp -r ./downloads/ oss://utube-download/downloads --update
 
 
